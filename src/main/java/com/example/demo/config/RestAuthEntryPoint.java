@@ -19,7 +19,7 @@ public class RestAuthEntryPoint implements AuthenticationEntryPoint {
     res.setContentType(MediaType.APPLICATION_JSON_VALUE);
     mapper.writeValue(res.getOutputStream(), Map.of(
       "ok", false,
-      "mensaje", "No autorizado o token inválido"
+      "mensaje", "No autorizado o token inválido."
     ));
   }
 }

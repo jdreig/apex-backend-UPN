@@ -37,6 +37,11 @@ public class logincontroller {
     public LoginResponse login(@RequestBody LoginRequest request) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+     // LOG AGREGADO: Imprime en consola el hash generado para "admin" cada vez que ejecutas la petición
+        System.out.println("==========================================");
+        System.out.println("HASH BCRYPT PARA 'admin': " + encoder.encode("admin"));
+        System.out.println("==========================================");
+        
         usuario user = usuarioRepo.findAll().stream()
                 .filter(u -> u.getNombreusuario().equals(request.nombreusuario))
                 .findFirst()
@@ -57,6 +62,8 @@ public class logincontroller {
         response.apellidos = user.getApellidos();
         response.rol = user.getRol().getDescripcion();
         response.idTipoRol = user.getRol().getTiporol();
+        
+        
         
         return response;
     }

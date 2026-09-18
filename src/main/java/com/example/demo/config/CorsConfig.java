@@ -12,7 +12,13 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")           // Rutas que se permitirán
               //  .allowedOrigins("http://localhost:4200", "https://*.onrender.com")  // Origen permitido (puedes agregar más URLs si lo necesitas)
-        		.allowedOrigins("https://*.onrender.com")
+		        .allowedOriginPatterns(
+		                "http://localhost:4200",
+		                "http://localhost:8080",
+		                "https://apex-backend-api-z0oy.onrender.com",
+		                "https://apex-frontend-upn.onrender.com",
+		                "https://*.onrender.com"
+		            )
         		.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")  // Métodos permitidos
                 .allowedHeaders("*")   // Todos los headers permitidos
                 .allowCredentials(true)  // Permite enviar credenciales (cookies, authorization headers)

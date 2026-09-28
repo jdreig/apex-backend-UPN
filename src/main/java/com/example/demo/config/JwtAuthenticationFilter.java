@@ -1,7 +1,6 @@
 package com.example.demo.config;
 
 import com.example.demo.service.JwtUtilService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
@@ -16,8 +15,14 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  @Autowired private JwtUtilService jwtUtil;
-  @Autowired private UserDetailsService userDetailsService;
+  private final JwtUtilService jwtUtil;
+  private final UserDetailsService userDetailsService;
+
+  // Inyección por constructor exigida por SonarQube
+  public JwtAuthenticationFilter(JwtUtilService jwtUtil, UserDetailsService userDetailsService) {
+    this.jwtUtil = jwtUtil;
+    this.userDetailsService = userDetailsService;
+  }
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -31,7 +36,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       token = header.substring(7);
       try {
         username = jwtUtil.extractUsername(token);
-      } catch (Exception ignored) { }
+      } catch (Exception ignored) { 
+        // Se ignora la excepción porque el token es inválido o ha expirado
+      }
     }
 
     // Si tenemos username y aún no hay autenticación en el contexto

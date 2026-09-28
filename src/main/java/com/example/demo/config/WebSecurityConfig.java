@@ -1,14 +1,13 @@
 package com.example.demo.config;
 
-import com.example.demo.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.service.UserDetailsServiceImpl; 
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -16,11 +15,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class WebSecurityConfig {
 
-  @Autowired private UserDetailsServiceImpl userDetailsService;
-  @Autowired private JwtAuthenticationFilter jwtAuthenticationFilter;
-  @Autowired private RestAuthEntryPoint restAuthEntryPoint;
-
-  @Bean public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+  @Bean 
+  public PasswordEncoder passwordEncoder() { 
+      return new BCryptPasswordEncoder(); 
+  }
 
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration cfg) throws Exception {
@@ -28,18 +26,19 @@ public class WebSecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain filterChain(
+          HttpSecurity http,
+          UserDetailsServiceImpl userDetailsService,
+          JwtAuthenticationFilter jwtAuthenticationFilter,
+          RestAuthEntryPoint restAuthEntryPoint) throws Exception {
+      
     http
-      .csrf(csrf -> csrf.disable())
-      .cors(cors -> {}) // <<--- habilita CORS usando tu CorsConfig (WebMvcConfigurer)
+      .csrf(csrf -> csrf.disable()) // Seguro en APIs REST stateless (JWT)
+      .cors(cors -> {}) 
       .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(authz -> authz
-        // Preflight
         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-        // Público para obtener el JWT
         .requestMatchers("/api/autenticarToken").permitAll()
-
-        // Resto protegido
         .anyRequest().authenticated()
       )
       .userDetailsService(userDetailsService)

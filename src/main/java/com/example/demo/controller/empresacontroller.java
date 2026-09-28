@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
@@ -12,8 +11,12 @@ import com.example.demo.repository.empresaRepository;
 @RequestMapping("/api")
 public class empresacontroller {
 
-    @Autowired
-    private empresaRepository empresaResp;
+    private final empresaRepository empresaResp;
+
+    // Inyección por constructor manteniendo el nombre de tu clase en minúscula
+    public empresacontroller(empresaRepository empresaResp) {
+        this.empresaResp = empresaResp;
+    }
 
     // GET listar todas las empresas
     @GetMapping("/empresa")
@@ -31,7 +34,6 @@ public class empresacontroller {
     // POST crear nueva empresa
     @PostMapping("/empresa")
     public empresa crearEmpresa(@RequestBody empresa nuevaEmpresa) {
-        // Validacion de RUC refactorizada con TDD
         if (!nuevaEmpresa.esRucValido()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El RUC ingresado es invalido o no cumple con el formato SUNAT");
         }
@@ -41,13 +43,12 @@ public class empresacontroller {
     // PUT actualizar empresa
     @PutMapping("/empresa/{id}")
     public empresa actualizarEmpresa(@PathVariable("id") Long id, @RequestBody empresa empresaActualizada) {
-        // Validacion de RUC refactorizada con TDD
         if (!empresaActualizada.esRucValido()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El RUC ingresado es invalido o no cumple con el formato SUNAT");
         }
 
         empresa empresaExistente = empresaResp.findById(id)
-                .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa no encontrada"));
 
         empresaExistente.setRuc(empresaActualizada.getRuc());
         empresaExistente.setRazonsocial(empresaActualizada.getRazonsocial());
@@ -56,6 +57,5 @@ public class empresacontroller {
         empresaExistente.setTelefono(empresaActualizada.getTelefono());
 
         return empresaResp.save(empresaExistente);
-    }
-
+    } 
 }

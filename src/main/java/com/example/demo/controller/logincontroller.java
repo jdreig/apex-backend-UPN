@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired; 
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -12,12 +10,18 @@ import com.example.demo.repository.usuarioRepository;
 @RequestMapping("/api")
 public class logincontroller {
 
-    @Autowired
-    private usuarioRepository usuarioRepo;
+    private final usuarioRepository usuarioRepo;
+
+    // Inyección por constructor requerida por SonarQube (sin @Autowired)
+    public logincontroller(usuarioRepository usuarioRepo) {
+        this.usuarioRepo = usuarioRepo;
+    }
+
     public static class LoginRequest { 
         public String nombreusuario;
         public String contrasena;
     }
+    
     public static class LoginResponse {
         public boolean success;
         public String mensaje;
@@ -33,6 +37,7 @@ public class logincontroller {
             this.mensaje = mensaje;
         }
     }
+
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -57,8 +62,6 @@ public class logincontroller {
         response.apellidos = user.getApellidos();
         response.rol = user.getRol().getDescripcion();
         response.idTipoRol = user.getRol().getTiporol();
-        
-        
         
         return response;
     }

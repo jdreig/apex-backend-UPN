@@ -27,3 +27,63 @@
 2026-09-18 08:41:10.391: [INFO] BookmarksLoadDropped droppedNodes=0
 2026-09-18 08:41:10.391: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
 2026-09-18 08:42:34.962: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-27 23:30:56.018: [INFO] CurrentProfilePath: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-27 23:30:56.018: [INFO] Profiles total count: 1
+2026-09-27 23:30:56.018: [INFO] Profile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-18T08:42:34.876Z
+2026-09-27 23:30:56.018: [INFO] LastUsedProfileDir: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-27 23:30:56.018: [INFO] MostRecentlyActiveProfile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-18T08:42:34.876Z
+2026-09-27 23:30:56.018: [INFO] OnDoneLoading sync enabled: 0
+2026-09-27 23:30:56.018: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-27 23:30:56.018: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-27 23:30:56.018: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-27 23:38:50.299: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-27 23:43:44.405: [INFO] CurrentProfilePath: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-27 23:43:44.405: [INFO] Profiles total count: 1
+2026-09-27 23:43:44.405: [INFO] Profile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-27T23:42:27.773Z
+2026-09-27 23:43:44.405: [INFO] LastUsedProfileDir: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-27 23:43:44.405: [INFO] MostRecentlyActiveProfile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-27T23:42:27.773Z
+2026-09-27 23:43:44.405: [INFO] OnDoneLoading sync enabled: 0
+2026-09-27 23:43:44.405: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-27 23:43:44.405: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-27 23:43:44.405: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-27 23:44:05.661: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-27 23:45:38.217: [INFO] CurrentProfilePath: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-27 23:45:38.217: [INFO] Profiles total count: 1
+2026-09-27 23:45:38.217: [INFO] Profile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-27T23:44:00.935Z
+2026-09-27 23:45:38.217: [INFO] LastUsedProfileDir: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-27 23:45:38.217: [INFO] MostRecentlyActiveProfile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-27T23:44:00.935Z
+2026-09-27 23:45:38.217: [INFO] OnDoneLoading sync enabled: 0
+2026-09-27 23:45:38.217: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-27 23:45:38.217: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-27 23:45:38.217: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-27 23:45:50.430: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-27 23:56:22.744: [INFO] CurrentProfilePath: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-27 23:56:22.744: [INFO] Profiles total count: 1
+2026-09-27 23:56:22.744: [INFO] Profile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-27T23:45:48.918Z
+2026-09-27 23:56:22.744: [INFO] LastUsedProfileDir: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-27 23:56:22.744: [INFO] MostRecentlyActiveProfile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-27T23:45:48.918Z
+2026-09-27 23:56:22.744: [INFO] OnDoneLoading sync enabled: 0
+2026-09-27 23:56:22.744: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-27 23:56:22.744: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-27 23:56:22.744: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-27 23:56:25.372: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-28 00:01:20.887: [INFO] CurrentProfilePath: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-28 00:01:20.887: [INFO] Profiles total count: 1
+2026-09-28 00:01:20.887: [INFO] Profile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-27T23:56:24.773Z
+2026-09-28 00:01:20.887: [INFO] LastUsedProfileDir: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-28 00:01:20.887: [INFO] MostRecentlyActiveProfile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-27T23:56:24.773Z
+2026-09-28 00:01:20.887: [INFO] OnDoneLoading sync enabled: 0
+2026-09-28 00:01:20.887: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-28 00:01:20.887: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-28 00:01:20.887: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-28 00:07:59.478: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-28 00:16:57.664: [INFO] CurrentProfilePath: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-28 00:16:57.664: [INFO] Profiles total count: 1
+2026-09-28 00:16:57.664: [INFO] Profile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-28T00:07:28.519Z
+2026-09-28 00:16:57.664: [INFO] LastUsedProfileDir: C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-28 00:16:57.664: [INFO] MostRecentlyActiveProfile: name=Perfil 1 path=C:\UPN\Calidad\Entregable\apex-back\apex-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-28T00:07:28.519Z
+2026-09-28 00:16:57.664: [INFO] OnDoneLoading sync enabled: 0
+2026-09-28 00:16:57.664: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-28 00:16:57.664: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-28 00:16:57.664: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-28 00:17:04.245: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1

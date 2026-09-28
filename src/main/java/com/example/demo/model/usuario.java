@@ -105,6 +105,13 @@ public class usuario {
         this.rol = rol;
     }
 
-    
-    
+    public boolean esCorreoValido() {
+        if (this.correo == null) return false;
+        // Refactorización: Expresión regular estándar para correo electrónico
+        return this.correo.matches("^[A-Za-z0-9+_.-]+@(.+)$");
+    }
+    public boolean esDocumentoValido() {
+        if (this.documento == null) return false;
+        return this.documento.length() == 8;
+    }
 }

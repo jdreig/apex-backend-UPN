@@ -56,6 +56,13 @@ public class ticketcontroller {
 	@PostMapping("/ticket")
 	public ticket crearTicket(@RequestBody ticket nuevoTicket) { 
 	    
+		// REFACTORIZACIÓN TDD: Validar reglas de negocio antes de procesar
+				if (!nuevoTicket.esValido()) {
+					throw new ResponseStatusException(
+						HttpStatus.BAD_REQUEST, 
+						"El ticket debe incluir un título válido y una descripción detallada (mínimo 10 caracteres)"
+					);
+				}
 		Long idUsuario = (nuevoTicket.getCliente() != null && 
 	                      nuevoTicket.getCliente().getUsuario() != null) 
 	                      ? nuevoTicket.getCliente().getUsuario().getIdusuario()

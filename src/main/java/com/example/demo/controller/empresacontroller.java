@@ -28,17 +28,24 @@ public class empresacontroller {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa no encontrada"));
     }
 
-    
     // POST crear nueva empresa
     @PostMapping("/empresa")
     public empresa crearEmpresa(@RequestBody empresa nuevaEmpresa) {
+        // Validacion de RUC refactorizada con TDD
+        if (!nuevaEmpresa.esRucValido()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El RUC ingresado es invalido o no cumple con el formato SUNAT");
+        }
         return empresaResp.save(nuevaEmpresa);
     }
-    
 
     // PUT actualizar empresa
     @PutMapping("/empresa/{id}")
     public empresa actualizarEmpresa(@PathVariable("id") Long id, @RequestBody empresa empresaActualizada) {
+        // Validacion de RUC refactorizada con TDD
+        if (!empresaActualizada.esRucValido()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El RUC ingresado es invalido o no cumple con el formato SUNAT");
+        }
+
         empresa empresaExistente = empresaResp.findById(id)
                 .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
 

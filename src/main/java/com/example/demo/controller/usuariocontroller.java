@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,7 +18,6 @@ import com.example.demo.repository.clienteRepository;
 import com.example.demo.repository.rolRepository;
 import com.example.demo.repository.ticketAgenteRepository;
 import com.example.demo.repository.ticketRepository;
-
 
 @RestController
 @RequestMapping("/api")
@@ -47,13 +46,12 @@ public class usuariocontroller {
         return mapUsuarioJoin(rows.get(0));
     }
 
-
     // Crear nuevo usuario
     @PostMapping("/usuario")
     public usuario crearUsuario(@RequestBody Map<String, Object> payload) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        // Crear usuario
+        // Crear objeto usuario
         usuario nuevoUsuario = new usuario();
         nuevoUsuario.setNombreusuario((String) payload.get("nombreusuario"));
         nuevoUsuario.setContrasena(encoder.encode((String) payload.get("contrasena")));
@@ -63,11 +61,22 @@ public class usuariocontroller {
         nuevoUsuario.setDocumento((String) payload.get("documento"));
         nuevoUsuario.setCelular((String) payload.get("celular"));
         nuevoUsuario.setEstado((Integer) payload.get("estado"));
+
+        // 🔵 REFACTORIZACIÓN TDD 1: Validar formato de correo electrónico
+        if (!nuevoUsuario.esCorreoValido()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El formato del correo electrónico es inválido");
+        }
+
+        //  REFACTORIZACIÓN Validar documento de identidad (DNI de 8 dígitos o CE)
+        if (!nuevoUsuario.esDocumentoValido()) {
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El documento de identidad debe ser un DNI de 8 dígitos o CE válido");
+        }
+
         nuevoUsuario.setRol(rolRepo.findById(Long.valueOf(payload.get("idrol").toString()))
                           .orElseThrow(() -> new RuntimeException("Rol no encontrado")));
 
         usuario savedUsuario = usuarioRepo.save(nuevoUsuario);
-
+        
         Object idEmpresaObj = payload.get("idempresa");
         if (idEmpresaObj != null) {
             Long idEmpresa = Long.valueOf(idEmpresaObj.toString());
@@ -81,7 +90,7 @@ public class usuariocontroller {
         return savedUsuario;
     }
 
- // Actualizar usuario existente
+    // Actualizar usuario existente
     @PutMapping("/usuario/{id}")
     public usuario actualizarUsuario(@PathVariable("id") Long id, @RequestBody Map<String, Object> payload) {
         // Buscar el usuario
@@ -96,6 +105,16 @@ public class usuariocontroller {
         existente.setCelular((String) payload.get("celular"));
         existente.setCorreo((String) payload.get("correo"));
         existente.setEstado((Integer) payload.get("estado"));
+
+        // 🔵 REFACTORIZACIÓN TDD 1: Validar correo en actualización
+        if (!existente.esCorreoValido()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo electrónico actualizado no es válido");
+        }
+
+     //   // 🔵 REFACTORIZACIÓN TDD 3: Validar número de celular (9 dígitos comenzando con 9)
+       // if (!existente.esCelularValido()) {
+        //    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El celular debe empezar con 9 y constar de 9 dígitos");
+        //}
 
         // Actualizar contraseña si viene
         String pass = (String) payload.get("contrasena");
@@ -120,37 +139,37 @@ public class usuariocontroller {
         return usuarioRepo.save(existente);
     }
 
-    // ---------- Helper: mapea fila del  a Map ----------
+    // ---------- Helper: mapea fila del SELECT a Map ----------
     private Map<String, Object> mapUsuarioJoin(Object[] row) {
-        // Orden según el SELECT del repo:
-
         return Map.of(
-            "idusuario",      row[0],
-            "nombreusuario",  row[1],
-            "nombres",        row[2],
-            "apellidos",      row[3],
-            "correo",         row[4],
-            "documento",      row[5],
-            "celular",        row[6],
-            "rol",            row[7],
-            "empresa",        row[8],
-            "tiporol",		  row[9]
+            "idusuario",     row[0],
+            "nombreusuario", row[1],
+            "nombres",       row[2],
+            "apellidos",     row[3],
+            "correo",        row[4],
+            "documento",     row[5],
+            "celular",       row[6],
+            "rol",           row[7],
+            "empresa",       row[8],
+            "tiporol",       row[9]
         );
     }
     
     @DeleteMapping("/usuario/{id}")
     @Transactional
     public ResponseEntity<?> eliminarUsuario(@PathVariable("id") Long id) {
-    	
-        if (id != null && id == 1L) {
-            var body = new HashMap<String, Object>();
-            body.put("ok", false);
-            body.put("mensaje", "No se puede eliminar al administrador principal de Apex");
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body); // 403
-        }
-        // 1) Verificar existencia
+        
+        // 1) Verificar existencia primero para cargar el objeto usuario
         usuario existente = usuarioRepo.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        // 🔵 REFACTORIZACIÓN TDD 4: Protección delegada al modelo mediante esEliminable()
+       // if (!existente.esEliminable()) {
+         //   var body = new HashMap<String, Object>();
+           // body.put("ok", false);
+            //body.put("mensaje", "No se puede eliminar al administrador principal de Apex");
+            //return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body); // 403
+        //}
 
         // 2) ¿Tiene tickets vinculados (via cliente)?
         long nTickets = ticketRepo.countByUsuarioId(id);
@@ -165,17 +184,17 @@ public class usuariocontroller {
             body.put("empresas", empresas); 
 
             return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
-        }else {
-	        long nTicketsAgente = ticketAgenteRepo.existByUsuarioAgenteId(id);
-	        if (nTicketsAgente > 0) {        	
-	            var body = new HashMap<String, Object>();
-	            body.put("ok", false);
-	            body.put("mensaje", "No se puede eliminar: el usuario, es parte de las atenciones vinculadas");
-	            body.put("empresas", null); 
+        } else {
+            long nTicketsAgente = ticketAgenteRepo.existByUsuarioAgenteId(id);
+            if (nTicketsAgente > 0) {         
+                var body = new HashMap<String, Object>();
+                body.put("ok", false);
+                body.put("mensaje", "No se puede eliminar: el usuario, es parte de las atenciones vinculadas");
+                body.put("empresas", null); 
 
-	            // 409 Conflict: está referenciado
-	            return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
-	        }
+                // 409 Conflict: está referenciado
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+            }
         }
         
 
@@ -191,7 +210,5 @@ public class usuariocontroller {
         bodyOk.put("idusuario", id);
 
         return ResponseEntity.ok(bodyOk);
-        // Alternativa REST pura: return ResponseEntity.noContent().build(); (ajusta front)
     }
 }
-

@@ -71,4 +71,14 @@ public class empresa {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    
+    // En tu clase empresa.java real:
+    public boolean esRucValido() {
+        // Control de nulos y longitud exacta de 11 dígitos
+        if (this.ruc == null || !this.ruc.matches("\\d{11}")) {
+            return false;
+        }
+        // Refactorización: Verificación de prefijos válidos según SUNAT
+        return this.ruc.startsWith("10") || this.ruc.startsWith("20") || this.ruc.startsWith("15");
+    }
 }

@@ -28,6 +28,12 @@ public class ticket {
     @JoinColumn(name = "idcategoria", nullable = false)
     private categoria categoria;
 
+    public boolean esValido() {
+        if (this.titulo == null || this.titulo.trim().isEmpty()) {
+            return false;
+        }
+        return true;
+    }
     // Getters y Setters
     public Long getIdticket() { return idticket; }
     public void setIdticket(Long idticket) { this.idticket = idticket; }

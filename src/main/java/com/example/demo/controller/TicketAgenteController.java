@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.ticketAgente;
-
-import com.example.demo.model.ticket;
-import com.example.demo.model.usuario;
-import com.example.demo.repository.ticketAgenteRepository;
-import com.example.demo.repository.ticketRepository;
-import com.example.demo.repository.usuarioRepository;
+import com.example.demo.dto.TicketAgenteDto;
+import com.example.demo.model.TicketAgente;
+import com.example.demo.model.Ticket;
+import com.example.demo.model.Usuario;
+import com.example.demo.repository.TicketAgenteRepository;
+import com.example.demo.repository.TicketRepository;
+import com.example.demo.repository.UsuarioRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,16 +20,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class ticketagentecontroller {
+public class TicketAgenteController {
 
-    private final ticketAgenteRepository ticketAgenteRepository;
-    private final ticketRepository ticketRepository;
-    private final usuarioRepository usuarioRepository;
+    private final TicketAgenteRepository ticketAgenteRepository;
+    private final TicketRepository ticketRepository;
+    private final UsuarioRepository usuarioRepository;
 
     // Inyección por constructor (Requerido por SonarQube en lugar de @Autowired)
-    public ticketagentecontroller(ticketAgenteRepository ticketAgenteRepository,
-                                  ticketRepository ticketRepository,
-                                  usuarioRepository usuarioRepository) {
+    public TicketAgenteController(TicketAgenteRepository ticketAgenteRepository,
+                                  TicketRepository ticketRepository,
+                                  UsuarioRepository usuarioRepository) {
         this.ticketAgenteRepository = ticketAgenteRepository;
         this.ticketRepository = ticketRepository;
         this.usuarioRepository = usuarioRepository;
@@ -37,7 +37,7 @@ public class ticketagentecontroller {
 
     // Método GET: Obtener todos los ticketAgente con los datos de ticket y usuario
     @GetMapping("/ticketagente")
-    public List<ticketAgente> getAllTicketAgentes() {
+    public List<TicketAgente> getAllTicketAgentes() {
         return ticketAgenteRepository.findAll();
     }
 
@@ -49,8 +49,9 @@ public class ticketagentecontroller {
         if (result.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        List<Map<String, Object>> response = new ArrayList<>();
         
+        List<Map<String, Object>> response = new ArrayList<>();
+
         for (Object[] row : result) {
             Map<String, Object> rowMap = new HashMap<>();
             rowMap.put("idticket", row[0]);
@@ -75,34 +76,34 @@ public class ticketagentecontroller {
             response.add(rowMap);
         }
 
-        // Retornar la respuesta como un ResponseEntity
         return ResponseEntity.ok(response);
     }
 
+    // Método POST utilizando el DTO para evitar el error de SonarQube
     @PostMapping("/ticketagente")
-    public ResponseEntity<ticketAgente> createTicketAgenteResponse(@RequestBody ticketAgente respuestaTicketAgente) {
+    public ResponseEntity<TicketAgente> createTicketAgenteResponse(@RequestBody TicketAgenteDto dto) {
 
         // Buscar el ticket correspondiente por ID
-        Optional<ticket> ticketOpt = ticketRepository.findById(respuestaTicketAgente.getTicket());
+        Optional<Ticket> ticketOpt = ticketRepository.findById(dto.getIdticket());
         if (!ticketOpt.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        Optional<usuario> usuarioOpt = usuarioRepository.findById(respuestaTicketAgente.getUsuario());
+
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(dto.getIdusuario());
         if (!usuarioOpt.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        ticketAgente nuevoTicketAgente = new ticketAgente();
+
+        TicketAgente nuevoTicketAgente = new TicketAgente();
+        nuevoTicketAgente.setTicket(dto.getIdticket());  
+        nuevoTicketAgente.setUsuario(dto.getIdusuario());
+        nuevoTicketAgente.setRespuesta(dto.getRespuesta()); 
         
-        nuevoTicketAgente.setTicket(respuestaTicketAgente.getTicket());  
-        nuevoTicketAgente.setUsuario(respuestaTicketAgente.getUsuario());
-        nuevoTicketAgente.setRespuesta(respuestaTicketAgente.getRespuesta()); 
-        
-        // Solución a la advertencia de SonarQube especificando la zona horaria del sistema
+        // Solución a la advertencia de zona horaria
         nuevoTicketAgente.setFechaRespuesta(LocalDateTime.now(ZoneId.systemDefault()));
 
-        ticketAgente guardarTicketAgente = ticketAgenteRepository.save(nuevoTicketAgente);
+        TicketAgente guardarTicketAgente = ticketAgenteRepository.save(nuevoTicketAgente);
 
-        // Retorna el ticketAgente guardado
         return ResponseEntity.ok(guardarTicketAgente);
     }
 }

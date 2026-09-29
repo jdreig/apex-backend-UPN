@@ -1,10 +1,10 @@
-// com.example.demo.service.JwtUtilService
 package com.example.demo.service;
 
 import io.jsonwebtoken.Claims;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtUtilService {
 
-  // MEJOR: lee de application.properties (fallback a tu valor base64 si no está seteado)
   @Value("${app.jwt.secret:TExBVkVfTVVZX1NFQ1JFVEE=}")
-  private String JWT_SECRET_KEY;
+  private String jwtSecretKey;
 
-  public static final long JWT_TOKEN_VALIDITY = java.time.Duration.ofMinutes(5).toMillis();
+  public static final long JWT_TOKEN_VALIDITY = Duration.ofMinutes(5).toMillis();
 
   public String extractUsername(String token) { 
     return extractClaim(token, Claims::getSubject); 
@@ -34,31 +33,35 @@ public class JwtUtilService {
 
   private Claims extractAllClaims(String token) {
     return Jwts.parser()
-        .setSigningKey(JWT_SECRET_KEY)
+        .setSigningKey(jwtSecretKey)
         .parseClaimsJws(token)
         .getBody();
   }
 
-  private Boolean isTokenExpired(String token) {
-    return extractExpiration(token).before(new Date());
+  private boolean isTokenExpired(String token) {
+    Instant expirationInstant = extractExpiration(token).toInstant();
+    return expirationInstant.isBefore(Instant.now());
   }
 
   public String generateToken(UserDetails userDetails) {
-	  Map<String, Object> claims = new HashMap<>();
-	  String rol = userDetails.getAuthorities().stream()
-	      .map(a -> a.getAuthority())
-	      .findFirst().orElse("ROLE_USER");
-	  claims.put("rol", rol);
-	  return createToken(claims, userDetails.getUsername());
-	}
-  
+      Map<String, Object> claims = new HashMap<>();
+      String rol = userDetails.getAuthorities().stream()
+          .map(a -> a.getAuthority())
+          .findFirst().orElse("ROLE_USER");
+      claims.put("rol", rol);
+      return createToken(claims, userDetails.getUsername());
+  }
+
   private String createToken(Map<String, Object> claims, String subject) {
+    Instant now = Instant.now();
+    Instant validity = now.plusMillis(JWT_TOKEN_VALIDITY);
+
     return Jwts.builder()
         .setClaims(claims)
         .setSubject(subject) // username
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
-        .signWith(SignatureAlgorithm.HS256, JWT_SECRET_KEY)
+        .setIssuedAt(Date.from(now))
+        .setExpiration(Date.from(validity))
+        .signWith(SignatureAlgorithm.HS256, jwtSecretKey)
         .compact();
   }
 

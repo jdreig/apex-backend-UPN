@@ -10,19 +10,19 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 @Table(name = "cliente")
-public class cliente {
+public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idcliente;
 
     @ManyToOne
     @JoinColumn(name = "idusuario", nullable = false)
-    private usuario usuario;
+    private Usuario usuario;
     
     // Relación con Empresa
     @ManyToOne
     @JoinColumn(name = "idempresa", nullable = false)
-    private empresa empresa;
+    private Empresa empresa;
 
     // Getters y Setters
     public Long getIdcliente() {
@@ -33,19 +33,19 @@ public class cliente {
         this.idcliente = idcliente;
     }
 
-    public usuario getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(usuario usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
-    public empresa getEmpresa() {
+    public Empresa getEmpresa() {
         return empresa;
     }
 
-    public void setEmpresa(empresa empresa) {
+    public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 }

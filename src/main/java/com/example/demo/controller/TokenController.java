@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,20 +18,32 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class tokenController {
+public class TokenController {
 
-    @Autowired private AuthenticationManager authenticationManager;
-    @Autowired private UserDetailsService usuarioDetailsService;
-    @Autowired private JwtUtilService jwtUtilService;
+    private static final String KEY_SUCCESS = "success";
+    private static final String KEY_MENSAJE = "mensaje";
+
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService usuarioDetailsService;
+    private final JwtUtilService jwtUtilService;
+
+    // Inyección por constructor requerida por SonarQube (sin @Autowired)
+    public TokenController(AuthenticationManager authenticationManager,
+                           UserDetailsService usuarioDetailsService,
+                           JwtUtilService jwtUtilService) {
+        this.authenticationManager = authenticationManager;
+        this.usuarioDetailsService = usuarioDetailsService;
+        this.jwtUtilService = jwtUtilService;
+    }
 
     @PostMapping("/autenticarToken")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticationReq req) {
+    public ResponseEntity<Object> authenticate(@RequestBody AuthenticationReq req) {
         
         // Validación preventiva para campos nulos
         if (req.getUsuario() == null || req.getClave() == null) {
             Map<String, Object> error = new HashMap<>();
-            error.put("success", false);
-            error.put("mensaje", "Los campos 'usuario' y 'clave' son obligatorios en el JSON.");
+            error.put(KEY_SUCCESS, false);
+            error.put(KEY_MENSAJE, "Los campos 'usuario' y 'clave' son obligatorios en el JSON.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
         }
 
@@ -48,15 +59,17 @@ public class tokenController {
 
             return ResponseEntity.ok(new TokenInfo(jwt));
 
-        } catch (BadCredentialsException e) {
+        } catch (BadCredentialsException _) {
+            // Se usa '_' ya que la variable de excepción no se referencia en este bloque
             Map<String, Object> error = new HashMap<>();
-            error.put("success", false);
-            error.put("mensaje", "Usuario o contraseña incorrectos.");
+            error.put(KEY_SUCCESS, false);
+            error.put(KEY_MENSAJE, "Usuario o contraseña incorrectos.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+
         } catch (Exception e) {
             Map<String, Object> error = new HashMap<>();
-            error.put("success", false);
-            error.put("mensaje", "Error interno en el servidor: " + e.getMessage());
+            error.put(KEY_SUCCESS, false);
+            error.put(KEY_MENSAJE, "Error interno en el servidor: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
         }
     }

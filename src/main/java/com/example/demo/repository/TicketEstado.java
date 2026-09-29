@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-public enum ticketEstado {
+public enum TicketEstado {
     ABIERTO(1, "Abierto"),
     EN_PROCESO(2, "En Proceso"),
     ATENDIDO(3, "Atendido"),
@@ -10,7 +10,7 @@ public enum ticketEstado {
     private final int codigo;
     private final String descripcion;
 
-    ticketEstado(int codigo, String descripcion) {
+    TicketEstado(int codigo, String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
@@ -23,8 +23,8 @@ public enum ticketEstado {
         return descripcion;
     }
 
-    public static ticketEstado fromCodigo(int codigo) {
-        for (ticketEstado estado : ticketEstado.values()) {
+    public static TicketEstado fromCodigo(int codigo) {
+        for (TicketEstado estado : TicketEstado.values()) {
             if (estado.codigo == codigo) {
                 return estado;
             }

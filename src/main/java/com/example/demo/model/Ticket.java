@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ticket")
-public class ticket {
+public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,18 +22,17 @@ public class ticket {
 
     @ManyToOne
     @JoinColumn(name = "idcliente", nullable = false)
-    private cliente cliente;
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "idcategoria", nullable = false)
-    private categoria categoria;
+    private Categoria categoria;
 
     public boolean esValido() {
-        if (this.titulo == null || this.titulo.trim().isEmpty()) {
-            return false;
-        }
-        return true;
+        // Simplificado a una sola línea de retorno directo para cumplir con SonarQube
+        return this.titulo != null && !this.titulo.trim().isEmpty();
     }
+
     // Getters y Setters
     public Long getIdticket() { return idticket; }
     public void setIdticket(Long idticket) { this.idticket = idticket; }
@@ -56,9 +55,9 @@ public class ticket {
     public Integer getEstado() { return estado; }
     public void setEstado(Integer estado) { this.estado = estado; }
 
-    public cliente getCliente() { return cliente; }
-    public void setCliente(cliente cliente) { this.cliente = cliente; }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public categoria getCategoria() { return categoria; }
-    public void setCategoria(categoria categoria) { this.categoria = categoria; }
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 }

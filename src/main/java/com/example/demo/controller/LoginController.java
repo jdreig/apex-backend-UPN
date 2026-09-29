@@ -3,17 +3,17 @@ package com.example.demo.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.example.demo.model.usuario;
-import com.example.demo.repository.usuarioRepository;
+import com.example.demo.model.Usuario;
+import com.example.demo.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/api")
-public class logincontroller {
+public class LoginController {
 
-    private final usuarioRepository usuarioRepo;
+    private final UsuarioRepository usuarioRepo;
 
     // Inyección por constructor requerida por SonarQube (sin @Autowired)
-    public logincontroller(usuarioRepository usuarioRepo) {
+    public LoginController(UsuarioRepository usuarioRepo) {
         this.usuarioRepo = usuarioRepo;
     }
 
@@ -42,7 +42,7 @@ public class logincontroller {
     public LoginResponse login(@RequestBody LoginRequest request) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         
-        usuario user = usuarioRepo.findAll().stream()
+        Usuario user = usuarioRepo.findAll().stream()
                 .filter(u -> u.getNombreusuario().equals(request.nombreusuario))
                 .findFirst()
                 .orElse(null);

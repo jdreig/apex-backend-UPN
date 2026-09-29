@@ -73,11 +73,18 @@
 			<version>2.3.1</version>
 		</dependency>
 
-		<!-- Starter para Pruebas Unitarias (incluye JUnit 5 y Mockito por defecto) -->
+		<!-- Starter para Pruebas Unitarias -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>compile</scope>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- Soporte para pruebas de Spring Security (@WithMockUser) -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-test</artifactId>
+		    <scope>test</scope>
 		</dependency>
 	</dependencies>
 

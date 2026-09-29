@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "ticketagente")
-public class ticketAgente {
+public class TicketAgente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idticketagente;

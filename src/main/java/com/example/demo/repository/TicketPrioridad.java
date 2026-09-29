@@ -1,15 +1,15 @@
 package com.example.demo.repository;
 
-public enum ticketPrioridad {
-	Baja(1, "Baja"),
-    Media(2, "Media"),
-    Alta(3, "Alta"),
-    Critica(4, "Critico");
+public enum TicketPrioridad {
+    BAJA(1, "Baja"),
+    MEDIA(2, "Media"),
+    ALTA(3, "Alta"),
+    CRITICA(4, "Critico");
 
     private final int codigo;
     private final String descripcion;
 
-    ticketPrioridad(int codigo, String descripcion) {
+    TicketPrioridad(int codigo, String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
@@ -22,8 +22,8 @@ public enum ticketPrioridad {
         return descripcion;
     }
 
-    public static ticketPrioridad fromCodigo(int codigo) {
-        for (ticketPrioridad prioridad : ticketPrioridad.values()) {
+    public static TicketPrioridad fromCodigo(int codigo) {
+        for (TicketPrioridad prioridad : TicketPrioridad.values()) {
             if (prioridad.codigo == codigo) {
                 return prioridad;
             }

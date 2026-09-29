@@ -1,12 +1,12 @@
 package com.example.demo.repository;
 
-public enum rolEstado {
+public enum RolEstado {
     SOPORTE(1),
     CLIENTE(2);
 
     private final int valor;
 
-    rolEstado(int valor) {
+    RolEstado(int valor) {
         this.valor = valor;
     }
 
@@ -14,8 +14,8 @@ public enum rolEstado {
         return valor;
     }
 
-    public static rolEstado fromValor(int valor) {
-        for (rolEstado r : rolEstado.values()) {
+    public static RolEstado fromValor(int valor) {
+        for (RolEstado r : RolEstado.values()) {
             if (r.getValor() == valor) {
                 return r;
             }

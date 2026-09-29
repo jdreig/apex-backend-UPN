@@ -1,22 +1,24 @@
 package com.example.demo.service;
 
-import com.example.demo.model.usuario;
-import com.example.demo.repository.usuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.Usuario;
+import com.example.demo.repository.UsuarioRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  @Autowired private usuarioRepository usuarioRepo;
+  private final UsuarioRepository usuarioRepo;
+
+  // Inyección por constructor requerida por SonarQube
+  public UserDetailsServiceImpl(UsuarioRepository usuarioRepo) {
+    this.usuarioRepo = usuarioRepo;
+  }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    // Ideal: agrega en el repo un método directo
-    usuario u = usuarioRepo.findByNombreusuario(username)
+    Usuario u = usuarioRepo.findByNombreusuario(username)
         .orElseThrow(() -> new UsernameNotFoundException("No existe: " + username));
 
     String rolName = (u.getRol() != null && u.getRol().getDescripcion() != null)
